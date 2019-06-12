@@ -79,7 +79,7 @@ class User_Gender(Resource):
             else :
                 return rows
 
-class User_Edit(Resource):      #Not working yet
+class User_Edit(Resource):
     def put(self):
         data = request.get_json()
 
@@ -100,7 +100,7 @@ class User_Edit(Resource):      #Not working yet
                 c = conn.cursor()
                 c.execute("UPDATE users SET first_name=?, last_name=?, email=?, gender=?,\
                         age=? WHERE id=?",(fName, lName, email, gender, age, user_id,))
-                c.commit()
+                conn.commit()
                 return 200
 
     def post(self):
@@ -123,7 +123,7 @@ class User_Edit(Resource):      #Not working yet
             else:
                 c.execute("INSERT INTO users (id, first_name, last_name, email, gender, age)\
                             VALUES (?, ?, ?, ?, ?, ?)", (user_id, fName, lName, email, gender, age))
-                c.commit()
+                conn.commit()
                 return 201
 
     def delete(self):
@@ -139,7 +139,7 @@ class User_Edit(Resource):      #Not working yet
                 return 'No Content!!', 204
             else: 
                 c.execute("DELETE FROM users WHERE id=?", (user_id,))
-                c.commit()
+                conn.commit()
                 return 202
 
 api.add_resource(User_Id, '/users/id=<int:id>')
